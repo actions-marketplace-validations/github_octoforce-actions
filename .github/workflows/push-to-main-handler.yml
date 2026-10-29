@@ -18,7 +18,7 @@ jobs:
     name: Release to Production
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@885641592076c27bfb56c028cd5612cdad63e16d
+      - uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791
         with:
           fetch-depth: 0
           token: ${{ secrets.SCOPED_PAT }}
@@ -45,13 +45,13 @@ jobs:
 
       - name: Setup Node
         if: steps.requires-deploy.outputs.changed == '1'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: ".nvmrc"
 
       - name: Cache Node Modules
         if: steps.requires-deploy.outputs.changed == '1'
-        uses: actions/cache@v5
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: npm_cache_id
         with:
           path: node_modules
@@ -111,7 +111,7 @@ jobs:
       - name: Get Previous Tag
         if: steps.check_release.outputs.IS_RELEASE == 'true' && steps.requires-deploy.outputs.changed == '1'
         id: previous_tag
-        uses: WyriHaximus/github-action-get-previous-tag@b95747caec0c7a37825ed29640b4adcb6a8cd3fb
+        uses: WyriHaximus/github-action-get-previous-tag@83f26fea93bc7efcbca2eb5591f5eaaf66b8f206
         with:
           fallback: 1.0.0
           prefix: v
@@ -121,7 +121,7 @@ jobs:
       - name: Get Next Tag Version
         if: steps.check_release.outputs.IS_RELEASE == 'true' && steps.requires-deploy.outputs.changed == '1'
         id: current_tag
-        uses: WyriHaximus/github-action-next-semvers@2fc363e72936d52dbd53eaa72f2c2db0d9207707
+        uses: WyriHaximus/github-action-next-semvers@1278b1df1ed4f4fcc526e0af650e08e7d60d1537
         with:
           version: ${{ steps.previous_tag.outputs.tag }}
 
